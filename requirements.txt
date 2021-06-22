@@ -29,3 +29,4 @@ pymongo == 3.11.4
 
 # C:\Users\Anshuman\VisionSearchProject\handlers.py: 1
 requests == 2.25.1
+gunicorn

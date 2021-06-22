@@ -9,7 +9,7 @@ def object_detection_handler(file_path, file_uri):
     payload = dict()
     files = list()
     headers = {
-        'Ocp-Apim-Subscription-Key': 'a731048f9a6448a799920bf28d220f2d'
+        'Ocp-Apim-Subscription-Key': os.environ.get('Ocp-Apim-Subscription-Key')
     }
     if not (file_uri is None):
         print("Url exists")
