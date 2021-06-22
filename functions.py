@@ -13,7 +13,12 @@ from clarifai_grpc.grpc.api.status import status_code_pb2
 
 import pymongo
 from pymongo import MongoClient
+from dotenv import load_dotenv
 
+load_dotenv()
+api_key=os.environ.get('CLARIFAI_API_KEY') 
+print("api_key")
+print(api_key)
 
 ##################     CLOUDINARY SECTION
 
@@ -46,8 +51,8 @@ def cloudinaryurl(DATADIR):
 
 
 def clarifai_train(cloudinary_url):
- api_key=os.environ.get('CLARIFAI_KEY') 
- metadata = (('authorization', 'Key 6c9bfc1ce038475ea47a1cab44af5d7d'),)
+ #api_key=os.environ.get('CLARIFAI_KEY') 
+ metadata = (('authorization', 'Key '+api_key),)
 
  post_inputs_response = stub.PostInputs(
     service_pb2.PostInputsRequest(
@@ -70,8 +75,8 @@ def clarifai_train(cloudinary_url):
 
 
 def clarifai_search(cloudinary_url):
-  api_key=os.environ.get('CLARIFAI_KEY') 
-  metadata = (('authorization', 'Key 6c9bfc1ce038475ea47a1cab44af5d7d'),)
+  #api_key=os.environ.get('CLARIFAI_KEY') 
+  metadata = (('authorization', 'Key '+api_key),)
   post_annotations_searches_response = stub.PostAnnotationsSearches(
     service_pb2.PostAnnotationsSearchesRequest(
         searches = [
@@ -110,8 +115,8 @@ def clarifai_search(cloudinary_url):
 
 
 def clarifai_clearportal():
-  api_key=os.environ.get('CLARIFAI_KEY') 
-  metadata = (('authorization', 'Key 6c9bfc1ce038475ea47a1cab44af5d7d'),)
+  
+  metadata = (('authorization', 'Key '+api_key),)
   
 
   list_inputs_response = stub.ListInputs(
