@@ -31,3 +31,4 @@ pymongo == 3.11.4
 requests == 2.25.1
 gunicorn
 python-dotenv
+dnspython
