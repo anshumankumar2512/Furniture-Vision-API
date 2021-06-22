@@ -4,6 +4,7 @@ from werkzeug.datastructures import  FileStorage
 from flask import Flask, jsonify,request
 import time
 from handlers import *
+from search import search_results
 
 app = Flask(__name__)
 
@@ -19,19 +20,16 @@ def upload_file():
 
             # Save the image in uploads folder. Store filepath in a variable and call the pass_file function.
             if 'image' in request.files.keys():
-            # print("Request Body: " + str(request.files['image'].filename))
                 file = request.files['image']
                 if file.filename == '':
                     return jsonify('no image received')
                 SAVED_FILE_PATH = os.path.join(UPLOAD_PATH, secure_filename(file.filename))
                 print("File save path : {}".format(SAVED_FILE_PATH))
-                # file.save(file_path, secure_filename(file.filename))
                 file.save(SAVED_FILE_PATH)
                 objects_detected = object_detection_handler(SAVED_FILE_PATH, None) 
                 crop_file(objects_detected, SAVED_FILE_PATH, file.filename, PROCESSED_PATH)
-                # print(result)
-                
-                return jsonify({"status": "success"}), 200
+                results=search_results()
+                return jsonify(results)
                 
             else:
                 return jsonify(message_builder("Invalid body", "Please provide an Image as form data with key name 'image'")), 415  
@@ -49,11 +47,11 @@ def upload_file():
             SAVED_FILE_PATH = os.path.join(UPLOAD_PATH, secure_filename(filename) + '.jpg')
             image.save(SAVED_FILE_PATH)
             crop_file(objects_detected, SAVED_FILE_PATH, filename + '.jpg', PROCESSED_PATH)
-            # crop_url(result,URL)  
-            # print(result)       
+             
+            results=search_results()
+            return jsonify(results)
 
-        return jsonify({"message":"Uploaded successfully"}), 200
-    #return render_template("upload_file.html", msg="Please select file")
+    
 
 def message_builder(argument, message):
     res = {
