@@ -105,7 +105,7 @@ def clarifai_search(cloudinary_url):
 
   query_list=[]
   for hit in post_annotations_searches_response.hits:
-    if hit.score>=0.85:
+    if hit.score>=0.90:
         di={}
         di['input_id']=hit.input.id
         di['score']=hit.score
